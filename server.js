@@ -35,6 +35,15 @@ app.get ('/' , (req, res) => {
     res.send('API Working');
 });
 
+app.get('/health', async (req, res) => {
+    try {
+        await pool.query('SELECT 1');
+        res.send('OK');
+    } catch (error) {
+        res.status(500).send('DB down');
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
